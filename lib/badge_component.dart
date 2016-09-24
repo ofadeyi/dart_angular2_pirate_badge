@@ -7,7 +7,20 @@ import 'package:angular2/core.dart';
 )
 class BadgeComponent {
   String badgeName = '';
+  String buttonText = 'Aye! Gimme a name!';
+  bool isButtonEnabled = true;
+
+  void generateBadge() {
+    badgeName = 'Anne Bonney';
+  }
+
   void updateBadge(String inputName){
-    badgeName = inputName;
+    if (inputName.trim().isEmpty) {
+      buttonText = 'Aye! Gimme a name!';
+      isButtonEnabled = true;
+    } else {
+      buttonText = 'Arrr! Write yer name!';
+      isButtonEnabled = false;
+    }
   }
 }
