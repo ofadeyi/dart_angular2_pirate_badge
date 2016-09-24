@@ -1,19 +1,18 @@
 import 'dart:math' show Random;
-import 'dart:convert';
-import 'dart:html';
 import 'dart:async';
+import 'dart:convert';
 import 'package:angular2/core.dart';
-
-
-const _namesPath = 'piratenames.json';
+import 'package:http/browser_client.dart';
 
 @Injectable()
 class NameService {
+  static const _namesPath = 'piratenames.json';
   static final Random _indexGen = new Random();
-
   final List _names = <String>[];
-
   final List _appellations = <String>[];
+  final BrowserClient _http;
+
+  NameService(this._http);
 
   String _randomFirstName() => _names[_indexGen.nextInt(_names.length)];
 
@@ -30,12 +29,21 @@ class NameService {
     return '$firstName the ${_randomAppellation()}';
   }
 
-  Future readyThePirates() async {
+  Future<Null> readyThePirates() async {
     if (_names.isNotEmpty && _appellations.isNotEmpty) return;
 
-    var jsonString = await HttpRequest.getString(_namesPath);
-    var pirateNames = JSON.decode(jsonString);
-    _names.addAll(pirateNames['names']);
-    _appellations.addAll(pirateNames['appellations']);
+    try {
+      final response = await _http.get(_namesPath);
+      final pirateNames = JSON.decode(response.body);
+      _names.addAll(pirateNames['names']);
+      _appellations.addAll(pirateNames['appellations']);
+    } catch (e) {
+      throw _handleError(e);
+    }
+  }
+
+  Exception _handleError(dynamic e) {
+    print(e); // log to console instead
+    return new Exception('Server error; cause: $e');
   }
 }
