@@ -1,6 +1,7 @@
 <div class="widgets">
-    <input (input)="updateBadge($event.target.value)"
-            type="text" maxlength="15">
+    <input #name
+           (keyup.enter)="badgeName=name.value"
+           type="text" maxlength="15">
 </div>
 <div class="badge">
     <div class="greeting">Arrr! Me name is</div>
