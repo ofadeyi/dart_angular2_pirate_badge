@@ -1,3 +1,9 @@
+<div class="widgets">
+    <input #name
+           (keyup.enter)="badgeName=name.value"
+           (blur)="badgeName=name.value"
+           type="text" maxlength="15">
+</div>
 <div class="badge">
     <div class="greeting">Arrr! Me name is</div>
     <div class="name">{{badgeName}}</div>
