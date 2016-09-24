@@ -15,6 +15,12 @@ class BadgeComponent {
   }
 
   void updateBadge(String inputName){
-    badgeName = inputName;
+    if (inputName.trim().isEmpty) {
+      buttonText = 'Aye! Gimme a name!';
+      isButtonEnabled = true;
+    } else {
+      buttonText = 'Arrr! Write yer name!';
+      isButtonEnabled = false;
+    }
   }
 }

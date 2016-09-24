@@ -1,5 +1,6 @@
 <div class="widgets">
     <input #name
+           (keyup)="updateBadge($event.target.value)"
            (keyup.enter)="badgeName=name.value"
            (blur)="badgeName=name.value"
            type="text" maxlength="15">
