@@ -3,6 +3,7 @@
            (keyup)="updateBadge($event.target.value)"
            (keyup.enter)="badgeName=name.value"
            (blur)="badgeName=name.value"
+           [disabled]="!isInputEnabled"
            type="text" maxlength="15">
     <button [disabled]="!isButtonEnabled"
             (click)="generateBadge()">
