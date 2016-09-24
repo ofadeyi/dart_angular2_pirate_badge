@@ -7,13 +7,27 @@ import 'name_service.dart';
     styleUrls: const ['badge_component.css'],
     providers: const [NameService]
 )
-class BadgeComponent {
+class BadgeComponent implements OnInit {
+  final NameService _nameService;
   String badgeName = '';
   String buttonText = 'Aye! Gimme a name!';
-  bool isButtonEnabled = true;
-  final NameService _nameService;
+  bool isButtonEnabled = false;
+  bool isInputEnabled = false;
 
   BadgeComponent(this._nameService);
+
+  @override
+  ngOnInit() async {
+    try {
+      await _nameService.readyThePirates();
+      //on success
+      isButtonEnabled = true;
+      isInputEnabled = true;
+    } catch (arrr) {
+      badgeName = 'Arrr! No names.';
+      print('Error initializing pirate names: $arrr');
+    }
+  }
 
   void setBadgeName([String newName = '']) {
     if (newName == null) return;
