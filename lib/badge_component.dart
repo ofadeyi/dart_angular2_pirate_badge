@@ -6,5 +6,8 @@ import 'package:angular2/core.dart';
     styleUrls: const ['badge_component.css']
 )
 class BadgeComponent {
-  String badgeName = 'Joe';
+  String badgeName = '';
+  void updateBadge(String inputName){
+    badgeName = inputName;
+  }
 }
